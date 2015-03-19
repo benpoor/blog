@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
 from polls.models import Poll
+import json
 
 # Create your views here.
 def index(request):
@@ -20,4 +21,9 @@ def detail(request, poll_id):
     # return render(request, 'polls/detail.html', {'poll':poll})
     poll = get_object_or_404(Poll, pk=poll_id)
     return render(request, 'polls/detail.html', {'poll':poll})
-1
+
+def json(request):
+    response_data = {}
+    response_data['result'] = 'a'
+    response_data['message'] = 'yyyy'
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
