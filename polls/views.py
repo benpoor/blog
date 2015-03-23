@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 from polls.models import Poll, Choice
+from polls.util import MyJsonEncoder
 import json
 
 # Create your views here.
@@ -44,11 +45,20 @@ import json
 #     poll = get_object_or_404(Poll, pk=poll_id)
 #     return render(request, 'polls/results.html', {'poll':poll})
 
-def json(request):
+def get_json(request):
     response_data = {}
     response_data['result'] = 'a'
     response_data['message'] = 'yyyy'
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+    datas = []
+    datas.append(response_data)
+
+    p = Poll.objects.filter(
+        pub_date__lte=timezone.now()
+    ).order_by('-pub_date')[:5]
+    u = MyJsonEncoder()
+    return HttpResponse(json.dumps(u.encode(p)), content_type="application/json")
+    # result = "{'id': 1, 'name': 'sss'}"
+    # return HttpResponse(result)
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
