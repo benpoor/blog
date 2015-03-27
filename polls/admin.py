@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*-
 from django.contrib import admin
 from polls.models import Poll,Choice
 
@@ -13,5 +14,5 @@ class PollAdmin(admin.ModelAdmin):
     list_display = ('question', 'pub_date', 'was_publish')
     list_filter = ['pub_date']
     search_fields = ['question']
-    list_per_page = 2
+    list_per_page = 10
 admin.site.register(Poll, PollAdmin)

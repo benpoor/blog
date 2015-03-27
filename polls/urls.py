@@ -14,4 +14,6 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
     url(r'^(?P<pk>\d+)/result/$', views.ResultView.as_view(), name='results'),
     url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'),
+
+    url(r'^user/$', views.UserView.as_view(), name='user'),
 )

@@ -4,7 +4,7 @@ from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
-from polls.models import Poll, Choice
+from polls.models import Poll, Choice, User
 from polls.util import MyJsonEncoder
 import json
 
@@ -93,3 +93,10 @@ def vote(request, poll_id):
         selected_choice.votes += 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+
+class UserView(generic.ListView):
+    template_name = 'polls/user.html'
+    context_object_name = 'user_list'
+
+    def get_queryset(self):
+        return Poll.objects[:5]
